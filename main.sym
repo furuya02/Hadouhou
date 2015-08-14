@@ -1,0 +1,53 @@
+004     @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+015-016 CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+021     main.c
+022     main.duty
+023     main.@SCRATCH1
+024     @delay_ms1.P1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B     @SCRATCH
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+0004  @delay_ms1
+0018  main
+0018  @cinit
+
+Project Directory:
+    C:\tmp2\yamato\
+
+Project Files:
+    main.c
+    ..\..\PROGRA~2\PICC\devices\16F819.h
+
+Units:
+    main.c (main)
+
+Compiler Settings:
+    Processor:      PIC16F819
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    ICD Provisions: Yes
+    Predefined symbols:
+       #define __DEBUG 1
+       #define __16F819 TRUE
+
+Output Files:
+    Errors:      main.err
+    INHX8:       main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.PJT
+    Call Tree:   main.tre

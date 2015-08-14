@@ -1,0 +1,145 @@
+CCS PCM C Compiler, Version 4.063, 41651               13-8-15 16:47
+
+               Filename: main.lst
+
+               ROM used: 93 words (5%)
+                         Largest free fragment is 1699
+               RAM used: 9 (4%) at main() level
+                         10 (4%) worst case
+               Stack:    1 locations
+
+*
+0000:  NOP
+0001:  MOVLW  00
+0002:  MOVWF  0A
+0003:  GOTO   018
+.................... #include<16F819.h> 
+.................... //////// Standard Header file for the PIC16F819 device //////////////// 
+.................... #device PIC16F819 
+.................... #list 
+....................  
+....................  
+.................... //INTRC_IO//内部クロックを使用してクロック用ピンをＩＯとして使用できるようにする設定 
+.................... //「NOMCLR」を追加すると、「リセット端子を使用しない」設定となり、ICD2のMCLRを外さなくてもPICが動作する 
+....................  
+.................... #fuses INTRC_IO,NOPUT, NOWDT, NOLVP, NOBROWNOUT,NOPROTECT//,NOMCLR 
+.................... #use delay(CLOCK=8000000)//4MHz 
+0004:  MOVLW  24
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   017
+000A:  MOVLW  02
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  97
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  DECFSZ 00,F
+0016:  GOTO   00A
+0017:  RETLW  00
+....................  
+....................  
+....................  
+....................  
+.................... void main(void) 
+.................... { 
+0018:  CLRF   04
+0019:  BCF    03.7
+001A:  MOVLW  1F
+001B:  ANDWF  03,F
+001C:  MOVLW  70
+001D:  BSF    03.5
+001E:  MOVWF  0F
+001F:  MOVF   0F,W
+0020:  BSF    1F.0
+0021:  BSF    1F.1
+0022:  BSF    1F.2
+0023:  BCF    1F.3
+.................... 	int c=0; 
+0024:  BCF    03.5
+0025:  CLRF   21
+.................... 	int duty=0; 
+0026:  CLRF   22
+.................... 	set_tris_b(0x80);//  
+0027:  MOVLW  80
+0028:  BSF    03.5
+0029:  MOVWF  06
+....................  
+.................... 	setup_timer_2(T2_DIV_BY_1,0xFF,1); 
+002A:  MOVLW  00
+002B:  MOVWF  78
+002C:  IORLW  04
+002D:  BCF    03.5
+002E:  MOVWF  12
+002F:  MOVLW  FF
+0030:  BSF    03.5
+0031:  MOVWF  12
+.................... 	setup_ccp1(CCP_PWM); 
+0032:  BCF    06.2
+0033:  BCF    03.5
+0034:  BCF    06.2
+0035:  MOVLW  0C
+0036:  MOVWF  17
+.................... 	set_pwm1_duty(0); 
+0037:  CLRF   15
+.................... 	duty = 0; 
+0038:  CLRF   22
+....................  
+.................... 	while(true){ 
+.................... 		for(duty=0;duty<0xFF;duty++){ 
+0039:  CLRF   22
+003A:  INCFSZ 22,W
+003B:  GOTO   03D
+003C:  GOTO   044
+.................... 			delay_ms(50); 
+003D:  MOVLW  32
+003E:  MOVWF  24
+003F:  CALL   004
+.................... 			set_pwm1_duty(duty); 
+0040:  MOVF   22,W
+0041:  MOVWF  15
+.................... 		} 
+0042:  INCF   22,F
+0043:  GOTO   03A
+.................... 		output_high(PIN_A1); 
+0044:  BSF    03.5
+0045:  BCF    05.1
+0046:  BCF    03.5
+0047:  BSF    05.1
+.................... 		delay_ms(3000); 
+0048:  MOVLW  0C
+0049:  MOVWF  23
+004A:  MOVLW  FA
+004B:  MOVWF  24
+004C:  CALL   004
+004D:  DECFSZ 23,F
+004E:  GOTO   04A
+.................... 		set_pwm1_duty(0); 
+004F:  CLRF   15
+.................... 		output_low(PIN_A1); 
+0050:  BSF    03.5
+0051:  BCF    05.1
+0052:  BCF    03.5
+0053:  BCF    05.1
+.................... 		delay_ms(3000); 
+0054:  MOVLW  0C
+0055:  MOVWF  23
+0056:  MOVLW  FA
+0057:  MOVWF  24
+0058:  CALL   004
+0059:  DECFSZ 23,F
+005A:  GOTO   056
+.................... 	} 
+005B:  GOTO   039
+.................... } 
+005C:  GOTO   05C
+
+Configuration Fuses:
+   Word  1: 3738   INTRC_IO NOWDT NOPUT MCLR NOBROWNOUT NOLVP NOCPD NOWRT DEBUG CCPB2 NOPROTECT
